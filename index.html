@@ -16,8 +16,6 @@
       --primary: #4aa3c8;
       --primary-dark: #2a7ea4;
       --line: #dbe9f3;
-      --pink: #ffe3ee;
-      --mint: #e8f8ef;
       --shadow: 0 10px 30px rgba(0,0,0,0.08);
       --radius: 22px;
       --max: 1180px;
@@ -51,6 +49,7 @@
     p {
       line-height: 1.7;
       color: var(--muted);
+      margin-top: 0;
     }
 
     a {
@@ -381,15 +380,29 @@
       gap: 18px;
     }
 
-    .big-card, .small-card, .quote-card, .list-card, .cta {
+    .big-card,
+    .small-card,
+    .quote-card,
+    .list-card,
+    .cta {
       background: rgba(255,255,255,0.92);
       border: 1px solid var(--line);
       border-radius: 24px;
       box-shadow: var(--shadow);
     }
 
-    .big-card, .small-card, .quote-card, .list-card {
+    .big-card,
+    .small-card,
+    .quote-card,
+    .list-card {
       padding: 26px;
+    }
+
+    .big-card ul {
+      color: var(--muted);
+      line-height: 1.9;
+      padding-left: 20px;
+      margin-bottom: 0;
     }
 
     .small-stack {
@@ -426,7 +439,7 @@
     }
 
     .resource-card::after {
-      content: \"\";
+      content: "";
       position: absolute;
       width: 180px;
       height: 180px;
@@ -589,69 +602,69 @@
 </head>
 <body>
   <header>
-    <div class=\"container nav\">
-      <a href=\"#top\" class=\"brand\">
-        <span class=\"brand-icon\">🩺</span>
+    <div class="container nav">
+      <a href="#top" class="brand">
+        <span class="brand-icon">🩺</span>
         <span>NurScape</span>
       </a>
 
       <nav>
         <ul>
-          <li><a href=\"#resources\">Ressources</a></li>
-          <li><a href=\"#features\">Fonctionnalités</a></li>
-          <li><a href=\"#courses\">Cours</a></li>
-          <li><a href=\"#community\">Communauté</a></li>
-          <li><a href=\"#contact\">Contact</a></li>
+          <li><a href="#resources">Ressources</a></li>
+          <li><a href="#features">Fonctionnalités</a></li>
+          <li><a href="#courses">Cours</a></li>
+          <li><a href="#community">Communauté</a></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <main id=\"top\">
-    <section class=\"hero\">
-      <div class=\"container hero-grid\">
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
         <div>
-          <span class=\"pill\">Apprentissage infirmier et médical, plus clair et plus simple</span>
+          <span class="pill">Apprentissage infirmier et médical, plus clair et plus simple</span>
           <h1>Apprends mieux.<br>Révise efficacement.<br>Progresse avec confiance.</h1>
           <p>
             NurScape est une plateforme moderne pensée pour les étudiants en soins infirmiers et en médecine.
             Tu y trouves des notes simplifiées, des guides pratiques, des exercices de calcul de doses et des parcours d’apprentissage structurés dans un espace calme et rassurant.
           </p>
 
-          <div class=\"hero-actions\">
-            <a class=\"btn btn-primary\" href=\"#resources\">Explorer les ressources</a>
-            <a class=\"btn btn-secondary\" href=\"#features\">Voir les fonctionnalités</a>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#resources">Explorer les ressources</a>
+            <a class="btn btn-secondary" href="#features">Voir les fonctionnalités</a>
           </div>
 
-          <div class=\"hero-stats\">
-            <div class=\"stat\">
+          <div class="hero-stats">
+            <div class="stat">
               <strong>120+</strong>
               <span>Fiches de révision et notes cliniques</span>
             </div>
-            <div class=\"stat\">
+            <div class="stat">
               <strong>24</strong>
               <span>Thèmes clés en soins infirmiers et médecine</span>
             </div>
-            <div class=\"stat\">
+            <div class="stat">
               <strong>100%</strong>
               <span>Conçu pour les étudiants et adapté au mobile</span>
             </div>
           </div>
         </div>
 
-        <div class=\"visual-card\">
-          <div class=\"visual-top\">
-            <span class=\"badge\">Parcours d’apprentissage mis en avant</span>
-            <div class=\"dots\"><span></span><span></span><span></span></div>
+        <div class="visual-card">
+          <div class="visual-top">
+            <span class="badge">Parcours d’apprentissage mis en avant</span>
+            <div class="dots"><span></span><span></span><span></span></div>
           </div>
 
-          <div class=\"illustration\">
-            <div class=\"bubble one\"></div>
-            <div class=\"bubble two\"></div>
-            <div class=\"bubble three\"></div>
+          <div class="illustration">
+            <div class="bubble one"></div>
+            <div class="bubble two"></div>
+            <div class="bubble three"></div>
 
-            <div class=\"mini-card\">
-              <div class=\"avatar\">👩‍⚕️</div>
+            <div class="mini-card">
+              <div class="avatar">👩‍⚕️</div>
               <div>
                 <h3>Fondements cliniques</h3>
                 <p>Constantes vitales, sécurité du patient, bases de pharmacologie, anatomie essentielle et outils de révision utiles au quotidien.</p>
@@ -659,12 +672,12 @@
             </div>
           </div>
 
-          <div class=\"mini-grid\">
-            <div class=\"mini-box\">
+          <div class="mini-grid">
+            <div class="mini-box">
               <h4>Calculs de doses</h4>
               <p>Entraîne-toi avec des explications simples et une méthode étape par étape.</p>
             </div>
-            <div class=\"mini-box\">
+            <div class="mini-box">
               <h4>Révision rapide</h4>
               <p>Des contenus courts et clairs pour réviser plus vite avant les examens ou les stages.</p>
             </div>
@@ -673,34 +686,34 @@
       </div>
     </section>
 
-    <section class=\"section\" id=\"resources\">
-      <div class=\"container\">
-        <div class=\"section-head\">
+    <section class="section" id="resources">
+      <div class="container">
+        <div class="section-head">
           <h2>Explorer par catégorie d’apprentissage</h2>
           <p>Une organisation pensée selon la façon réelle dont les étudiants étudient : cours de base, fiches médicaments, pratique clinique et révision rapide.</p>
         </div>
 
-        <div class=\"cards-grid\">
-          <article class=\"card\">
-            <div class=\"icon-box blue\">🫀</div>
+        <div class="cards-grid">
+          <article class="card">
+            <div class="icon-box blue">🫀</div>
             <h3>Anatomie et physiologie</h3>
             <p>Des explications visuelles, des vues d’ensemble des systèmes du corps et des notes de révision pour les bases biologiques.</p>
           </article>
 
-          <article class=\"card\">
-            <div class=\"icon-box pink\">💊</div>
+          <article class="card">
+            <div class="icon-box pink">💊</div>
             <h3>Médicaments</h3>
             <p>Familles thérapeutiques, précautions essentielles, indications fréquentes et résumés utiles pour mieux apprendre.</p>
           </article>
 
-          <article class=\"card\">
-            <div class=\"icon-box green\">🧪</div>
+          <article class="card">
+            <div class="icon-box green">🧪</div>
             <h3>Pratique clinique</h3>
             <p>Gestes, surveillance du patient, actions infirmières, prévention des infections et bases du soin.</p>
           </article>
 
-          <article class=\"card\">
-            <div class=\"icon-box yellow\">📝</div>
+          <article class="card">
+            <div class="icon-box yellow">📝</div>
             <h3>Exercices et quiz</h3>
             <p>Calculs de doses, mini quiz et autoévaluations rapides pour renforcer les connaissances.</p>
           </article>
@@ -708,17 +721,17 @@
       </div>
     </section>
 
-    <section class=\"section\" id=\"features\">
-      <div class=\"container\">
-        <div class=\"section-head\">
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-head">
           <h2>Une plateforme pensée pour de vraies habitudes d’étude</h2>
           <p>Cette page combine une structure de plateforme éducative, une navigation claire des ressources médicales et une identité visuelle douce et moderne.</p>
         </div>
 
-        <div class=\"split\">
-          <article class=\"big-card\">
-            <span class=\"pill\">Pourquoi NurScape fonctionne</span>
-            <h3 style=\"margin-top:14px;\">Structuré, apaisant et facile à parcourir</h3>
+        <div class="split">
+          <article class="big-card">
+            <span class="pill">Pourquoi NurScape fonctionne</span>
+            <h3 style="margin-top:14px;">Structuré, apaisant et facile à parcourir</h3>
             <p>
               Au lieu de surcharger l’étudiant avec des pages denses, NurScape utilise des sections nettes, des couleurs douces, des catégories claires et des cartes faciles à lire.
               Le but est d’aider l’utilisateur à passer rapidement d’un sujet à l’autre tout en restant concentré.
@@ -731,18 +744,18 @@
             </ul>
           </article>
 
-          <div class=\"small-stack\">
-            <article class=\"small-card\">
+          <div class="small-stack">
+            <article class="small-card">
               <h4>Navigation intelligente</h4>
               <p>Les étudiants peuvent aller directement vers l’anatomie, les pathologies, les médicaments ou les exercices sans se perdre.</p>
             </article>
 
-            <article class=\"small-card\">
+            <article class="small-card">
               <h4>Ambiance visuelle douce</h4>
               <p>Les teintes bleu, rose et vert menthe créent une atmosphère rassurante inspirée des supports éducatifs modernes.</p>
             </article>
 
-            <article class=\"small-card\">
+            <article class="small-card">
               <h4>Aide à la révision</h4>
               <p>Ajoute facilement tes propres fiches, PDF, résumés et exercices sans devoir refaire tout le site.</p>
             </article>
@@ -751,59 +764,59 @@
       </div>
     </section>
 
-    <section class=\"section\" id=\"courses\">
-      <div class=\"container\">
-        <div class=\"section-head\">
+    <section class="section" id="courses">
+      <div class="container">
+        <div class="section-head">
           <h2>Espaces d’apprentissage mis en avant</h2>
           <p>Ces blocs d’accueil servent de raccourcis visuels pour guider rapidement l’étudiant vers les contenus essentiels.</p>
         </div>
 
-        <div class=\"resource-grid\">
-          <article class=\"resource-card one\">
+        <div class="resource-grid">
+          <article class="resource-card one">
             <h3>Notes cliniques</h3>
             <p>Concepts infirmiers rapides, rappels de soins et notes utiles pour les stages.</p>
-            <a href=\"#\">Ouvrir les notes →</a>
+            <a href="#">Ouvrir les notes →</a>
           </article>
 
-          <article class=\"resource-card two\">
+          <article class="resource-card two">
             <h3>Fiches médicaments</h3>
             <p>Informations essentielles sur les médicaments, précautions et résumés de pharmacologie.</p>
-            <a href=\"#\">Voir les fiches →</a>
+            <a href="#">Voir les fiches →</a>
           </article>
 
-          <article class=\"resource-card three\">
+          <article class="resource-card three">
             <h3>Zone examens et quiz</h3>
             <p>Espaces d’entraînement pour calculs de doses, mini évaluations et révisions ciblées.</p>
-            <a href=\"#\">Commencer à s’entraîner →</a>
+            <a href="#">Commencer à s’entraîner →</a>
           </article>
         </div>
       </div>
     </section>
 
-    <section class=\"section\" id=\"community\">
-      <div class=\"container\">
-        <div class=\"section-head\">
+    <section class="section" id="community">
+      <div class="container">
+        <div class="section-head">
           <h2>Créé pour les étudiants, guidé par le soin</h2>
           <p>Cette section peut servir à inspirer confiance, présenter ta mission et montrer que la plateforme repose sur une vraie expérience infirmière.</p>
         </div>
 
-        <div class=\"testimonial-grid\">
-          <article class=\"quote-card\">
-            <p class=\"quote\">
+        <div class="testimonial-grid">
+          <article class="quote-card">
+            <p class="quote">
               « NurScape a été créé pour rendre l’apprentissage infirmier et médical plus accessible, plus organisé et moins stressant.
               L’objectif n’est pas seulement de partager de l’information, mais de la présenter d’une manière réellement utile aux étudiants. »
             </p>
 
-            <div class=\"person\">
-              <div class=\"person-badge\">👩‍⚕️</div>
+            <div class="person">
+              <div class="person-badge">👩‍⚕️</div>
               <div>
                 <strong>Chaima — Fondatrice de NurScape</strong><br>
-                <span style=\"color:#5f7991;\">Infirmière • Apprenante • Créatrice d’outils d’éducation médicale</span>
+                <span style="color:#5f7991;">Infirmière • Apprenante • Créatrice d’outils d’éducation médicale</span>
               </div>
             </div>
           </article>
 
-          <aside class=\"list-card\">
+          <aside class="list-card">
             <h3>Bonnes prochaines pages à créer</h3>
             <ul>
               <li>Page À propos</li>
@@ -816,15 +829,15 @@
           </aside>
         </div>
 
-        <div class=\"cta\" id=\"contact\">
+        <div class="cta" id="contact">
           <div>
             <h2>Prête à faire grandir NurScape ?</h2>
             <p>Ajoute tes premières vraies pages, publie tes fiches et transforme cette page d’accueil en vraie plateforme d’apprentissage infirmier.</p>
           </div>
 
-          <div style=\"display:flex; gap:12px; flex-wrap:wrap;\">
-            <a class=\"btn btn-primary\" href=\"#top\">Retour en haut</a>
-            <a class=\"btn btn-secondary\" href=\"mailto:contact@nurscape.com\">Ajouter un contact plus tard</a>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <a class="btn btn-primary" href="#top">Retour en haut</a>
+            <a class="btn btn-secondary" href="mailto:contact@nurscape.com">Ajouter un contact plus tard</a>
           </div>
         </div>
       </div>
@@ -832,18 +845,18 @@
   </main>
 
   <footer>
-    <div class=\"container\">
-      <div class=\"footer-box\">
+    <div class="container">
+      <div class="footer-box">
         <div>
           <h3>NurScape</h3>
           <p>Un espace d’apprentissage calme, structuré et pensé pour les étudiants en soins infirmiers et en médecine.</p>
         </div>
 
-        <div class=\"footer-links\">
-          <a href=\"#resources\">Ressources</a>
-          <a href=\"#features\">Fonctionnalités</a>
-          <a href=\"#courses\">Cours</a>
-          <a href=\"#community\">À propos</a>
+        <div class="footer-links">
+          <a href="#resources">Ressources</a>
+          <a href="#features">Fonctionnalités</a>
+          <a href="#courses">Cours</a>
+          <a href="#community">À propos</a>
         </div>
       </div>
     </div>
