@@ -1,1 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nurscape — Nursing & Medical Learning Platform</title>
+  <style>
+    :root {
+      --bg: #f6fbff;
+      --surface: #ffffff;
+      --surface-2: #eef8ff;
+      --text: #17324d;
+      --muted: #5f7991;
+      --primary: #4aa3c8;
+      --primary-dark: #2a7ea4;
+      --accent: #f7bfd3;
+      --accent-2: #d9f2e6;
+      --line: #dbe9f3;
+      --shadow: 0 16px 40px rgba(31, 79, 117, 0.12);
+      --radius: 24px;
+      --radius-sm: 16px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, #dff4ff 0, transparent 28%),
+        radial-gradient(circle at top right, #ffe3ee 0, transparent 24%),
+        linear-gradient(180deg, #fafdff 0%, #f3fbff 100%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.8);
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: 0 10px 24px rgba(52, 112, 153, 0.08);
+      font-size: 14px;
+      color: var(--primary-dark);
+      font-weight: 700;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 22px;
+      border-radius: 14px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(52, 136, 180, 0.25);
+    }
+
+    .btn-primary:hover { transform: translateY(-2px); }
+
+    .btn-secondary {
+      background: #fff;
+      border-color: var(--line);
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: var(--surface-2);
+      transform: translateY(-2px);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(248, 252, 255, 0.82);
+      border-bottom: 1px solid rgba(219, 233, 243, 0.8);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 78px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 24px;
+    }
+
+    .brand-mark {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #8ed9f5 0%, #ffc6d9 100%);
+      box-shadow: var(--shadow);
+      font-size: 24px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 22px;
+      padding: 0;
+      margin: 0;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    nav a:hover { color: var(--primary-dark); }
+
+    .hero {
+      padding: 56px 0 28px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .hero-copy h1 {
+      margin: 18px 0 14px;
+      font-size: clamp(38px, 6vw, 66px);
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-copy p {
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 62ch;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(219, 233, 243, 0.9);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 12px 26px rgba(45, 92, 127, 0.08);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+
+    .stat span { color: var(--muted); font-size: 14px; }
+
+    .hero-visual {
+      position: relative;
+      min-height: 540px;
+    }
+
+    .shape {
+      position: absolute;
+      border-radius: 28px;
+      filter: blur(0.2px);
+    }
+
+    .shape.one {
+      inset: 26px 18px auto auto;
+      width: 170px;
+      height: 170px;
+      background: linear-gradient(145deg, #ffd8e7 0%, #ffeef5 100%);
+    }
+
+    .shape.two {
+      inset: auto auto 22px 0;
+      width: 190px;
+      height: 190px;
+      background: linear-gradient(145deg, #d9f6ea 0%, #effcf6 100%);
+    }
+
+    .panel {
+      position: absolute;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(219, 233, 243, 0.95);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-main {
+      inset: 48px 32px 70px 42px;
+      padding: 22px;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fdff 100%);
+    }
+
+    .panel-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .badge-soft {
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #edf8ff;
+      color: var(--primary-dark);
+    }
+
+    .mini-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .mini-dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #d6e6ef;
+    }
+
+    .illustration {
+      height: 220px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, #78c3e0 0%, #4e99bc 100%);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .illustration .bubble {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.16);
+    }
+
+    .bubble.b1 { width: 120px; height: 120px; top: -10px; left: -20px; }
+    .bubble.b2 { width: 180px; height: 180px; bottom: -50px; right: -30px; }
+    .bubble.b3 { width: 60px; height: 60px; top: 26px; right: 58px; }
+
+    .nurse-card {
+      position: absolute;
+      inset: auto 28px 18px 28px;
+      display: grid;
+      grid-template-columns: 82px 1fr;
+      gap: 16px;
+      align-items: center;
+      background: rgba(255,255,255,0.92);
+      border-radius: 20px;
+      padding: 14px;
+    }
+
+    .avatar {
+      width: 82px;
+      height: 82px;
+      border-radius: 22px;
+      display: grid;
+      place-items: center;
+      font-size: 36px;
+      background: linear-gradient(135deg, #ffdbe9 0%, #fff3f7 100%);
+    }
+
+    .nurse-card h3 {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+
+    .nurse-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .panel-float {
+      right: 0;
+      top: 0;
+      width: 210px;
+      padding: 16px;
+      background: linear-gradient(180deg, #fff7fb 0%, #ffffff 100%);
+    }
+
+    .panel-float h4, .panel-bottom h4 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .panel-float p, .panel-bottom p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .panel-bottom {
+      left: 0;
+      bottom: 0;
+      width: 220px;
+      padding: 16px;
+      background: linear-gradient(180deg, #f5fffb 0%, #ffffff 100%);
+    }
+
+    .section {
+      padding: 34px 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .section-head h2 {
+      margin: 0 0 8px;
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.1;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 62ch;
+      line-height: 1.7;
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .category-card {
+      background: rgba(255,255,255,0.9);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: 0 14px 28px rgba(48, 93, 129, 0.07);
+      transition: 0.25s ease;
+    }
+
+    .category-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 34px rgba(48, 93, 129, 0.11);
+    }
+
+    .icon-box {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 16px;
+      font-size: 28px;
+    }
+
+    .icon-blue { background: #e6f6fd; }
+    .icon-pink { background: #ffedf4; }
+    .icon-green { background: #eaf9f0; }
+    .icon-yellow { background: #fff8e8; }
+
+    .category-card h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+    }
+
+    .category-card p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .category-card a {
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .features-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .feature-large,
+    .feature-small {
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.92);
+      box-shadow: 0 14px 26px rgba(39, 88, 126, 0.07);
+    }
+
+    .feature-large {
+      padding: 28px;
+      min-height: 100%;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fdff 100%);
+    }
+
+    .feature-large h3 {
+      margin: 12px 0 12px;
+      font-size: 28px;
+    }
+
+    .feature-large p,
+    .feature-small p,
+    .testimonial p,
+    .cta p,
+    footer p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .feature-large ul {
+      margin: 18px 0 0;
+      padding-left: 20px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .feature-stack {
+      display: grid;
+      gap: 18px;
+    }
+
+    .feature-small {
+      padding: 22px;
+    }
+
+    .feature-small h4 {
+      margin: 10px 0 8px;
+      font-size: 21px;
+    }
+
+    .resources {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .resource-card {
+      position: relative;
+      min-height: 220px;
+      border-radius: 26px;
+      overflow: hidden;
+      color: #17324d;
+      box-shadow: var(--shadow);
+      padding: 24px;
+      border: 1px solid rgba(255,255,255,0.65);
+    }
+
+    .resource-card.one {
+      background: linear-gradient(135deg, #9fd7ee 0%, #5ca8cb 100%);
+      color: #fff;
+    }
+
+    .resource-card.two {
+      background: linear-gradient(135deg, #ffd8e7 0%, #ffeef4 100%);
+    }
+
+    .resource-card.three {
+      background: linear-gradient(135deg, #d9f3e5 0%, #f3fcf7 100%);
+    }
+
+    .resource-card::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.16);
+      right: -42px;
+      bottom: -54px;
+    }
+
+    .resource-card h3 {
+      margin: 0 0 10px;
+      font-size: 26px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .resource-card p,
+    .resource-card a {
+      position: relative;
+      z-index: 1;
+    }
+
+    .resource-card a {
+      display: inline-block;
+      margin-top: 14px;
+      font-weight: 800;
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+    }
+
+    .testimonial,
+    .checklist,
+    .cta {
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.92);
+      box-shadow: 0 14px 26px rgba(39, 88, 126, 0.07);
+    }
+
+    .testimonial,
+    .checklist {
+      padding: 26px;
+    }
+
+    .quote {
+      font-size: 18px;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .person {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .person-badge {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #e6f6fd 0%, #ffedf4 100%);
+      font-size: 24px;
+    }
+
+    .person strong { display: block; }
+    .person span { color: var(--muted); font-size: 14px; }
+
+    .checklist h3,
+    .cta h2,
+    footer h3 {
+      margin-top: 0;
+    }
+
+    .checklist ul {
+      margin: 0;
+      padding-left: 20px;
+      line-height: 2;
+      color: var(--muted);
+    }
+
+    .cta {
+      margin-top: 34px;
+      padding: 32px;
+      background: linear-gradient(135deg, #eef9ff 0%, #fff1f6 100%);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    footer {
+      padding: 18px 0 48px;
+    }
+
+    .footer-box {
+      background: #12304a;
+      color: #e6f2fb;
+      border-radius: 28px;
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+      box-shadow: 0 22px 40px rgba(13, 42, 66, 0.18);
+    }
+
+    .footer-box p {
+      color: rgba(230, 242, 251, 0.8);
+      margin-bottom: 0;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: flex-end;
+    }
+
+    .footer-links a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      color: #f3fbff;
+      font-weight: 700;
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid,
+      .testimonial-grid,
+      .features-wrap,
+      .footer-box {
+        grid-template-columns: 1fr;
+      }
+
+      .categories,
+      .resources {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .hero-visual {
+        min-height: 500px;
+      }
+
+      .footer-links { justify-content: flex-start; }
+    }
+
+    @media (max-width: 760px) {
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 14px 0;
+      }
+
+      nav ul {
+        flex-wrap: wrap;
+        gap: 12px 18px;
+      }
+
+      .hero {
+        padding-top: 28px;
+      }
+
+      .hero-stats,
+      .categories,
+      .resources {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 450px;
+      }
+
+      .panel-main {
+        inset: 44px 12px 56px 12px;
+      }
+
+      .panel-float,
+      .panel-bottom {
+        width: 180px;
+      }
+
+      .nurse-card {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        align-items: start;
+      }
+
+      .cta {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#top">
+        <span class="brand-mark">🩺</span>
+        <span>Nurscape</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="#resources">Resources</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#courses">Courses</a></li>
+          <li><a href="#community">Community</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="pill">Nursing & medical education, made clearer</span>
+          <h1>Learn smarter.<br>Study clinically.<br>Grow with confidence.</h1>
+          <p>
+            Nurscape is a modern learning platform for nursing and medical students.
+            Find simplified notes, practical guides, dose-calculation practice, and structured learning paths in one calm, supportive space.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#resources">Explore resources</a>
+            <a class="btn btn-secondary" href="#features">See platform features</a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat">
+              <strong>120+</strong>
+              <span>Study sheets and clinical notes</span>
+            </div>
+            <div class="stat">
+              <strong>24</strong>
+              <span>Core nursing and medical topics</span>
+            </div>
+            <div class="stat">
+              <strong>100%</strong>
+              <span>Student-focused, mobile-friendly layout</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="shape one"></div>
+          <div class="shape two"></div>
+
+          <div class="panel panel-main">
+            <div class="panel-top">
+              <span class="badge-soft">Featured learning path</span>
+              <div class="mini-dots"><span></span><span></span><span></span></div>
+            </div>
+
+            <div class="illustration">
+              <div class="bubble b1"></div>
+              <div class="bubble b2"></div>
+              <div class="bubble b3"></div>
+              <div class="nurse-card">
+                <div class="avatar">👩‍⚕️</div>
+                <div>
+                  <h3>Clinical Foundations</h3>
+                  <p>Vitals, patient safety, pharmacology basics, anatomy essentials, and revision tools designed for real student needs.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="features-wrap" style="grid-template-columns: 1fr 1fr; gap: 12px;">
+              <div class="feature-small" style="padding:16px;">
+                <div class="badge-soft" style="background:#eaf9f0;color:#2f7d5c;display:inline-flex;">Dose practice</div>
+                <h4 style="font-size:18px;">Math support</h4>
+                <p>Practice calculations with simple explanations and step-by-step structure.</p>
+              </div>
+              <div class="feature-small" style="padding:16px;">
+                <div class="badge-soft" style="background:#ffedf4;color:#b65f86;display:inline-flex;">Quick review</div>
+                <h4 style="font-size:18px;">Smart summaries</h4>
+                <p>Short, clear content blocks that help you revise faster before exams or stage.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-float">
+            <h4>Today’s focus</h4>
+            <p>Emergency basics, infection control, IV monitoring, anatomy refresh.</p>
+          </div>
+
+          <div class="panel panel-bottom">
+            <h4>New this week</h4>
+            <p>Updated pathology sheets, medication notes, and quick OSCE prep cards.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="resources">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Explore by learning category</h2>
+            <p>Built around how students actually study: core lessons, drug references, clinical exercises, and fast revision support.</p>
+          </div>
+        </div>
+
+        <div class="categories">
+          <article class="category-card">
+            <div class="icon-box icon-blue">🫀</div>
+            <h3>Anatomy & Physiology</h3>
+            <p>Clear visual explanations, organ system overviews, and revision notes for core biological foundations.</p>
+            <a href="#courses">Open category →</a>
+          </article>
+
+          <article class="category-card">
+            <div class="icon-box icon-pink">💊</div>
+            <h3>Medications</h3>
+            <p>Drug families, key precautions, common indications, and practical summaries for safer learning.</p>
+            <a href="#courses">Browse meds →</a>
+          </article>
+
+          <article class="category-card">
+            <div class="icon-box icon-green">🧪</div>
+            <h3>Clinical Practice</h3>
+            <p>Procedures, patient monitoring, nursing actions, infection prevention, and bedside essentials.</p>
+            <a href="#features">See guides →</a>
+          </article>
+
+          <article class="category-card">
+            <div class="icon-box icon-yellow">📝</div>
+            <h3>Exercises & Quizzes</h3>
+            <p>Practice calculations, mini quizzes, and fast self-checks to reinforce your knowledge.</p>
+            <a href="#community">Start practicing →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>A platform designed for real study habits</h2>
+            <p>This layout combines an educational-platform structure, organized medical resource navigation, and a soft visual identity inspired by modern healthcare-themed templates.</p>
+          </div>
+        </div>
+
+        <div class="features-wrap">
+          <article class="feature-large">
+            <span class="pill">Why Nurscape works</span>
+            <h3>Structured, calm, and easy to scan</h3>
+            <p>
+              Instead of overwhelming students with dense pages, Nurscape uses clean sections, soft colors, clear categories, and high-contrast cards.
+              The goal is to help users move quickly from topic to topic while staying focused.
+            </p>
+            <ul>
+              <li>Simple navigation for notes, courses, and exercises</li>
+              <li>Large visual cards for quick orientation</li>
+              <li>Friendly pastel medical theme with professional tone</li>
+              <li>Mobile-ready design for phone-based revision</li>
+            </ul>
+          </article>
+
+          <div class="feature-stack">
+            <article class="feature-small">
+              <span class="pill" style="background:#edf8ff;color:#2a7ea4;">Smart navigation</span>
+              <h4>Topic-first browsing</h4>
+              <p>Students can move directly to anatomy, pathologies, medications, or exercises without getting lost.</p>
+            </article>
+
+            <article class="feature-small">
+              <span class="pill" style="background:#ffedf4;color:#b65f86;">Soft visual theme</span>
+              <h4>Medical, but not cold</h4>
+              <p>Blue, pink, and mint accents bring a reassuring atmosphere inspired by educational and healthcare presentation styles.</p>
+            </article>
+
+            <article class="feature-small">
+              <span class="pill" style="background:#eaf9f0;color:#2f7d5c;">Study support</span>
+              <h4>Useful for courses and revision</h4>
+              <p>Add your own sheets, practice pages, PDFs, or summaries without redesigning the entire site.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="courses">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Featured learning spaces</h2>
+            <p>These homepage blocks are made to feel like visual shortcuts, similar to presentation-style covers and themed study modules.</p>
+          </div>
+        </div>
+
+        <div class="resources">
+          <article class="resource-card one">
+            <h3>Clinical Notes</h3>
+            <p>Quick nursing concepts, patient care reminders, and stage-friendly reference notes.</p>
+            <a href="#">Open notes →</a>
+          </article>
+
+          <article class="resource-card two">
+            <h3>Medication Sheets</h3>
+            <p>Essential drug information, precautions, and simple pharmacology summaries.</p>
+            <a href="#">View medication pages →</a>
+          </article>
+
+          <article class="resource-card three">
+            <h3>Exam & Quiz Zone</h3>
+            <p>Practice areas for dose calculations, mini assessments, and focused revision sessions.</p>
+            <a href="#">Start practicing →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="community">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Built for students, shaped by care</h2>
+            <p>Use this section to build trust, explain your mission, and show that the platform is grounded in nursing reality.</p>
+          </div>
+        </div>
+
+        <div class="testimonial-grid">
+          <article class="testimonial">
+            <p class="quote">
+              “Nurscape was created to make nursing and medical learning feel more accessible, more organized, and less overwhelming.
+              The objective is not only to share information, but to present it in a way that students can truly use.”
+            </p>
+            <div class="person">
+              <div class="person-badge">👩‍⚕️</div>
+              <div>
+                <strong>Chaima — Founder of Nurscape</strong>
+                <span>Nurse • Learner • Medical education builder</span>
+              </div>
+            </div>
+          </article>
+
+          <aside class="checklist">
+            <h3>Good first pages to build next</h3>
+            <ul>
+              <li>About page</li>
+              <li>Anatomy & physiology page</li>
+              <li>Medications page</li>
+              <li>Dose calculation practice page</li>
+              <li>Pathologies page</li>
+              <li>Contact or request-a-topic form</li>
+            </ul>
+          </aside>
+        </div>
+
+        <div class="cta" id="contact">
+          <div>
+            <h2>Ready to grow Nurscape?</h2>
+            <p>Add your first real pages, upload your notes, and turn this homepage into a full nursing learning platform.</p>
+          </div>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <a class="btn btn-primary" href="#top">Back to top</a>
+            <a class="btn btn-secondary" href="mailto:hello@nurscape.com">Add contact later</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-box">
+        <div>
+          <h3>Nurscape</h3>
+          <p>A calm, organized learning space for nursing and medical students.</p>
+        </div>
+        <div class="footer-links">
+          <a href="#resources">Resources</a>
+          <a href="#features">Features</a>
+          <a href="#courses">Courses</a>
+          <a href="#community">About</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
 
