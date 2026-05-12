@@ -1398,10 +1398,10 @@ async function deleteRow(table, id) {
 }
 
 function bindAdmin() {
-  $(".admin-tab").forEach((tab) => {
+  $$(".admin-tab").forEach((tab) => {
     tab.addEventListener("click", () => {
-      $(".admin-tab").forEach((item) => item.classList.remove("active"));
-      $(".admin-panel").forEach((panel) => panel.classList.remove("active"));
+      $$(".admin-tab").forEach((item) => item.classList.remove("active"));
+      $$(".admin-panel").forEach((panel) => panel.classList.remove("active"));
       tab.classList.add("active");
       $(`#${tab.dataset.panel}`).classList.add("active");
     });
