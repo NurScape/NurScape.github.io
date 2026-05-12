@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nurscape Academy</title>
+  <meta name="description" content="Nurscape Academy, plateforme dynamique de ressources infirmières créée par Chaima El Hoummadi, infirmière polyvalente.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-shell">
+      <a class="brand" href="#accueil" aria-label="Nurscape Academy">
+        <span class="brand-mark">Nurscape</span>
+        <span class="brand-sub">Academy</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Navigation principale">
+        <a class="active" href="#accueil">Accueil</a>
+        <a href="#cours">Cours</a>
+        <a href="#videos">Vidéos</a>
+        <a href="#infographies">Infographies</a>
+        <a href="#pdf">PDF</a>
+        <a href="#quiz">Quiz</a>
+        <a href="#apropos">À propos</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="Changer le thème">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        <a class="btn btn-small" href="admin.html">Se connecter</a>
+        <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Ouvrir le menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="accueil">
+      <div class="hero-backdrop" id="heroBackdrop"></div>
+      <div class="container hero-content">
+        <div class="hero-copy">
+          <h1 id="heroTitle">Votre <span>réussite</span>, notre mission.</h1>
+          <div class="ecg-divider" aria-hidden="true"></div>
+          <p id="heroSubtitle">Des cours complets, des vidéos pédagogiques, des infographies claires et des ressources fiables créées par Chaima El Hoummadi, infirmière polyvalente.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" id="heroPrimaryBtn" href="#cours">Découvrir les cours <i class="fa-solid fa-arrow-right"></i></a>
+            <a class="btn btn-outline" id="heroSecondaryBtn" href="#ressources">Explorer les ressources</a>
+          </div>
+        </div>
+        <div class="hero-anatomy" aria-hidden="true">
+          <i class="fa-solid fa-brain"></i>
+          <i class="fa-solid fa-heart-pulse"></i>
+        </div>
+      </div>
+    </section>
+
+    <section class="section courses-section" id="cours">
+      <div class="container">
+        <div class="section-title">
+          <span class="line"></span>
+          <h2>Nos matières</h2>
+          <span class="line"></span>
+        </div>
+
+        <div class="toolbar">
+          <label class="search" for="courseSearch">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input id="courseSearch" type="search" placeholder="Rechercher une matière...">
+          </label>
+          <button class="chip active" data-filter="all" type="button">Tous</button>
+          <button class="chip" data-filter="clinique" type="button">Clinique</button>
+          <button class="chip" data-filter="soins" type="button">Soins</button>
+          <button class="chip" data-filter="sante" type="button">Santé publique</button>
+        </div>
+
+        <div class="course-grid" id="courseGrid" aria-live="polite"></div>
+        <p class="empty-state" id="courseEmpty" hidden>Aucune matière ne correspond à cette recherche.</p>
+      </div>
+    </section>
+
+    <section class="stats-wrap">
+      <div class="container stats" id="statsGrid"></div>
+    </section>
+
+    <section class="section about-section" id="apropos">
+      <div class="container about-grid">
+        <div>
+          <h2 id="aboutTitle">À propos de Nurscape Academy</h2>
+          <p id="aboutText">Nurscape Academy est une plateforme créée par Chaima El Hoummadi, infirmière polyvalente, pour accompagner les étudiants infirmiers avec des ressources claires, fiables et proches de la réalité du terrain.</p>
+        </div>
+        <div class="feature-list" id="featureList"></div>
+        <figure class="about-photo">
+          <img id="aboutImage" src="https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?auto=format&fit=crop&w=900&q=80" alt="Stéthoscope et documents médicaux">
+        </figure>
+      </div>
+    </section>
+
+    <section class="section resources-section" id="ressources">
+      <div class="container">
+        <div class="section-head">
+          <h2>Ressources récentes</h2>
+          <p>Les vidéos, infographies, PDF et quiz publiés depuis l'espace admin apparaissent ici.</p>
+        </div>
+        <div class="resource-tabs" role="tablist" aria-label="Types de ressources">
+          <button class="chip active" data-resource-filter="all" type="button">Tous</button>
+          <button class="chip" data-resource-filter="video" type="button" id="videos">Vidéos</button>
+          <button class="chip" data-resource-filter="infographic" type="button" id="infographies">Infographies</button>
+          <button class="chip" data-resource-filter="pdf" type="button" id="pdf">PDF</button>
+          <button class="chip" data-resource-filter="quiz" type="button" id="quiz">Quiz</button>
+        </div>
+        <div class="resource-grid" id="resourceGrid"></div>
+        <p class="empty-state" id="resourceEmpty" hidden>Aucune ressource publiée pour le moment.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="contact">
+    <div class="container footer-grid">
+      <div>
+        <a class="brand footer-brand" href="#accueil">
+          <span class="brand-mark">Nurscape</span>
+          <span class="brand-sub">Academy</span>
+        </a>
+        <p>La référence infirmière pour apprendre avec méthode.</p>
+        <div class="socials" id="socialLinks"></div>
+      </div>
+      <div>
+        <h3>Liens rapides</h3>
+        <a href="#accueil">Accueil</a>
+        <a href="#cours">Cours</a>
+        <a href="#ressources">Ressources</a>
+        <a href="#apropos">À propos</a>
+      </div>
+      <div>
+        <h3>Ressources</h3>
+        <a href="#videos">Vidéos</a>
+        <a href="#infographies">Infographies</a>
+        <a href="#pdf">PDF</a>
+        <a href="#quiz">Quiz</a>
+      </div>
+      <form class="newsletter" id="newsletterForm">
+        <h3>Newsletter</h3>
+        <p>Recevez nos nouveautés et conseils.</p>
+        <div class="newsletter-row">
+          <input type="email" placeholder="Votre email" aria-label="Votre email" required>
+          <button type="submit">S'abonner</button>
+        </div>
+        <span class="form-note" id="newsletterNote"></span>
+      </form>
+    </div>
+    <div class="container footer-bottom">
+      <span>© <span id="year"></span> Nurscape Academy — Tous droits réservés</span>
+      <span><i class="fa-solid fa-heart"></i> Créé avec passion par Chaima El Hoummadi, infirmière polyvalente</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
