@@ -717,6 +717,21 @@ body.light .site-header {
   border-color: var(--border);
 }
 
+.admin-quick-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 24px;
+}
+
+.admin-quick-tabs .admin-tab {
+  border-color: var(--border);
+  background: linear-gradient(135deg, rgba(221, 127, 158, .18), rgba(28, 49, 74, .35));
+  color: var(--text);
+  font-weight: 700;
+  min-height: 48px;
+}
+
 .admin-main {
   padding: 34px;
 }
@@ -1022,6 +1037,13 @@ code {
         </div>
         <span class="status-pill" id="connectionStatus">Mode aperçu</span>
       </div>
+
+      <nav class="admin-quick-tabs" aria-label="Accès rapide admin">
+        <button class="admin-tab active" data-panel="homePanel" type="button"><i class="fa-solid fa-house"></i> Accueil</button>
+        <button class="admin-tab" data-panel="coursesPanel" type="button"><i class="fa-solid fa-book-medical"></i> Cours</button>
+        <button class="admin-tab" data-panel="resourcesPanel" type="button"><i class="fa-solid fa-folder-open"></i> Ressources / Upload</button>
+        <button class="admin-tab" data-panel="quizzesPanel" type="button"><i class="fa-solid fa-circle-question"></i> Quiz</button>
+      </nav>
 
       <section class="login-card" id="loginCard">
         <h2>Connexion administrateur</h2>
@@ -1409,10 +1431,11 @@ async function deleteRow(table, id) {
 function bindAdmin() {
   $$(".admin-tab").forEach((tab) => {
     tab.addEventListener("click", () => {
-      $$(".admin-tab").forEach((item) => item.classList.remove("active"));
+      const targetPanel = tab.dataset.panel;
+      $$(".admin-tab").forEach((item) => item.classList.toggle("active", item.dataset.panel === targetPanel));
       $$(".admin-panel").forEach((panel) => panel.classList.remove("active"));
-      tab.classList.add("active");
-      $(`#${tab.dataset.panel}`).classList.add("active");
+      $(`#${targetPanel}`).classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
   });
 
