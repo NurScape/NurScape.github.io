@@ -9,7 +9,993 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <style>
+:root {
+  --bg: #050b15;
+  --bg-2: #0c1424;
+  --panel: rgba(255, 255, 255, .075);
+  --panel-strong: rgba(255, 255, 255, .12);
+  --border: rgba(232, 138, 166, .34);
+  --text: #fff7fb;
+  --muted: #dccbd3;
+  --pink: #dd7f9e;
+  --pink-2: #f0b6c9;
+  --ink: #141021;
+  --blue: #152a42;
+  --shadow: 0 28px 90px rgba(0, 0, 0, .42);
+}
+
+body.light {
+  --bg: #f8eff4;
+  --bg-2: #fff8fb;
+  --panel: rgba(255, 255, 255, .78);
+  --panel-strong: rgba(255, 255, 255, .92);
+  --border: rgba(116, 62, 84, .2);
+  --text: #211725;
+  --muted: #695665;
+  --blue: #edf3f8;
+  --shadow: 0 22px 60px rgba(91, 52, 70, .14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Montserrat, Arial, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 8% 3%, rgba(221, 127, 158, .2), transparent 24rem),
+    radial-gradient(circle at 92% 20%, rgba(41, 74, 112, .42), transparent 28rem),
+    linear-gradient(135deg, var(--bg), var(--bg-2));
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(115deg, transparent 0 48%, rgba(221, 127, 158, .18) 49%, transparent 51%),
+    linear-gradient(65deg, transparent 0 64%, rgba(221, 127, 158, .1) 65%, transparent 67%);
+  opacity: .24;
+  z-index: -1;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.container {
+  width: min(1160px, calc(100% - 40px));
+  margin-inline: auto;
+}
+
+.site-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50;
+  background: linear-gradient(180deg, rgba(5, 11, 21, .92), rgba(5, 11, 21, .42));
+  backdrop-filter: blur(18px);
+}
+
+body.light .site-header {
+  background: rgba(255, 248, 251, .82);
+}
+
+.nav-shell {
+  min-height: 92px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.brand {
+  display: inline-flex;
+  flex-direction: column;
+  line-height: .8;
+  min-width: max-content;
+}
+
+.brand-mark {
+  font-family: "Great Vibes", cursive;
+  font-size: clamp(42px, 5vw, 74px);
+  color: var(--text);
+  font-weight: 400;
+}
+
+.brand-sub {
+  color: var(--pink-2);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 9px;
+  margin-left: 64px;
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.nav-links a {
+  border-bottom: 1px solid transparent;
+  padding: 12px 0;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--pink-2);
+  border-color: var(--pink);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, .08);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.menu-btn {
+  display: none;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 24px;
+  color: var(--text);
+  background: var(--panel);
+  cursor: pointer;
+  transition: transform .2s ease, border-color .2s ease, background .2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--pink);
+}
+
+.btn-primary,
+.btn-small {
+  background: linear-gradient(135deg, var(--pink), #9b6078);
+  color: #fff;
+}
+
+.btn-small {
+  padding: 13px 18px;
+}
+
+.btn-outline {
+  background: transparent;
+}
+
+.hero {
+  position: relative;
+  min-height: 680px;
+  padding: 158px 0 70px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero-backdrop {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center right;
+  filter: saturate(.86);
+  z-index: -2;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 190px;
+  background: linear-gradient(0deg, var(--bg), transparent);
+  z-index: -1;
+}
+
+.hero-content {
+  display: grid;
+  grid-template-columns: minmax(0, 540px) 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.hero-copy h1 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(48px, 7vw, 86px);
+  line-height: 1.07;
+  margin: 0;
+  font-weight: 500;
+}
+
+.hero-copy h1 span {
+  color: var(--pink);
+}
+
+.hero-copy p {
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.75;
+  max-width: 520px;
+  margin: 24px 0 28px;
+}
+
+.ecg-divider,
+.line {
+  display: inline-block;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--pink), transparent);
+}
+
+.ecg-divider {
+  position: relative;
+  width: min(450px, 100%);
+  margin-top: 28px;
+}
+
+.ecg-divider::after,
+.line::after {
+  content: "\f21e";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  color: var(--pink);
+  background: transparent;
+}
+
+.ecg-divider::after {
+  left: 50%;
+  top: -11px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.hero-anatomy {
+  justify-self: end;
+  display: flex;
+  gap: 28px;
+  align-self: end;
+  padding: 280px 28px 0 0;
+  color: rgba(255, 255, 255, .78);
+}
+
+.hero-anatomy i {
+  font-size: clamp(72px, 9vw, 132px);
+  color: transparent;
+  -webkit-text-stroke: 1.5px currentColor;
+}
+
+.hero-anatomy i:last-child {
+  color: transparent;
+  -webkit-text-stroke-color: var(--pink);
+}
+
+.section {
+  padding: 72px 0;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  margin-bottom: 32px;
+}
+
+.section-title h2,
+.section-head h2,
+.about-section h2,
+.admin-main h1 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(32px, 5vw, 48px);
+  line-height: 1.1;
+  margin: 0;
+  font-weight: 500;
+}
+
+.line {
+  position: relative;
+  width: min(170px, 20vw);
+}
+
+.line::after {
+  left: calc(50% - 8px);
+  top: -11px;
+}
+
+.toolbar,
+.resource-tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: min(390px, 100%);
+  padding: 0 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel);
+}
+
+.search input {
+  width: 100%;
+  height: 48px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text);
+}
+
+.chip {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--text);
+  padding: 12px 17px;
+  cursor: pointer;
+}
+
+.chip.active {
+  background: linear-gradient(135deg, var(--pink), #82556d);
+  color: #fff;
+}
+
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 14px;
+  justify-content: center;
+}
+
+.course-card,
+.resource-card,
+.editor-card,
+.login-card,
+.list-item {
+  border: 1px solid var(--border);
+  background: linear-gradient(135deg, rgba(221, 127, 158, .22), rgba(28, 49, 74, .35));
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+}
+
+.course-card {
+  min-height: 190px;
+  border-radius: 8px;
+  padding: 24px 14px;
+  text-align: center;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+  transition: transform .2s ease, background .2s ease;
+}
+
+.course-card:hover {
+  transform: translateY(-6px);
+  background: linear-gradient(135deg, rgba(221, 127, 158, .32), rgba(28, 49, 74, .5));
+}
+
+.course-icon i {
+  font-size: 48px;
+  color: transparent;
+  -webkit-text-stroke: 1.2px var(--text);
+}
+
+.course-card h3,
+.resource-card h3,
+.feature h3 {
+  font-family: "Playfair Display", Georgia, serif;
+  margin: 0;
+  line-height: 1.15;
+}
+
+.course-card p,
+.resource-card p,
+.feature p,
+.section-head p,
+.about-section p,
+.site-footer p {
+  color: var(--muted);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.course-card p {
+  font-size: 13px;
+}
+
+.empty-state {
+  color: var(--pink-2);
+  text-align: center;
+}
+
+.stats-wrap {
+  padding: 18px 0 42px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, .045);
+  overflow: hidden;
+}
+
+.stat-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 12px;
+  padding: 22px 24px;
+  align-items: center;
+  border-right: 1px solid rgba(221, 127, 158, .28);
+}
+
+.stat-item:last-child {
+  border-right: 0;
+}
+
+.stat-item i {
+  grid-row: span 2;
+  color: var(--pink);
+  font-size: 30px;
+}
+
+.stat-item strong {
+  color: var(--pink);
+  font-size: 24px;
+}
+
+.stat-item span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: .9fr 1.3fr .8fr;
+  gap: 34px;
+  align-items: center;
+}
+
+.about-grid h2 {
+  color: var(--pink-2);
+  margin-bottom: 20px;
+}
+
+.feature-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-inline: 1px solid rgba(221, 127, 158, .25);
+}
+
+.feature {
+  padding: 12px 26px;
+  border-right: 1px solid rgba(221, 127, 158, .25);
+}
+
+.feature:last-child {
+  border-right: 0;
+}
+
+.feature i {
+  color: var(--pink);
+  font-size: 34px;
+  margin-bottom: 16px;
+}
+
+.feature h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.feature p {
+  font-size: 13px;
+}
+
+.about-photo img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+
+.section-head {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 28px;
+}
+
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.resource-card {
+  border-radius: 10px;
+  padding: 24px;
+  min-height: 190px;
+}
+
+.resource-card > i {
+  color: var(--pink);
+  font-size: 32px;
+  margin-bottom: 18px;
+}
+
+.resource-card span {
+  color: var(--pink-2);
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  background: rgba(0, 0, 0, .22);
+  padding: 42px 0 24px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr .7fr .7fr 1.2fr;
+  gap: 42px;
+}
+
+.footer-brand .brand-mark {
+  font-size: 54px;
+}
+
+.footer-brand .brand-sub {
+  font-size: 11px;
+  letter-spacing: 6px;
+}
+
+.site-footer h3 {
+  color: var(--pink-2);
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.site-footer a:not(.brand) {
+  display: block;
+  color: var(--muted);
+  font-size: 14px;
+  margin: 12px 0;
+}
+
+.socials {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.socials a {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid !important;
+  place-items: center;
+  background: var(--panel);
+  border: 1px solid var(--border);
+}
+
+.newsletter-row {
+  display: flex;
+  margin-top: 18px;
+}
+
+.newsletter-row input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  padding: 14px;
+  border-radius: 8px 0 0 8px;
+}
+
+.newsletter-row button {
+  border: 0;
+  background: var(--pink);
+  color: #fff;
+  padding: 0 18px;
+  border-radius: 0 8px 8px 0;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  color: var(--muted);
+  font-size: 13px;
+  border-top: 1px solid rgba(221, 127, 158, .18);
+  margin-top: 36px;
+  padding-top: 18px;
+}
+
+.footer-bottom i {
+  color: var(--pink);
+}
+
+.admin-body {
+  background: linear-gradient(135deg, #050b15, #151021);
+}
+
+.admin-layout {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 290px 1fr;
+}
+
+.admin-sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: 26px;
+  border-right: 1px solid var(--border);
+  background: rgba(0, 0, 0, .22);
+}
+
+.admin-sidebar .brand {
+  margin-bottom: 36px;
+}
+
+.admin-tabs {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.admin-tab {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  text-align: left;
+  border-radius: 8px;
+  padding: 13px 14px;
+  cursor: pointer;
+}
+
+.admin-tab.active,
+.admin-tab:hover {
+  color: var(--text);
+  background: var(--panel);
+  border-color: var(--border);
+}
+
+.admin-main {
+  padding: 34px;
+}
+
+.admin-topbar,
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.eyebrow {
+  color: var(--pink);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.status-pill {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 10px 14px;
+  color: var(--muted);
+}
+
+.status-pill.online {
+  color: #98f5c8;
+  border-color: rgba(152, 245, 200, .35);
+}
+
+.login-card,
+.editor-card {
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.admin-panel {
+  display: none;
+}
+
+.admin-panel.active {
+  display: block;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.form-grid label {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.form-grid label:has(textarea),
+.form-grid .switch {
+  grid-column: span 2;
+}
+
+.form-grid input,
+.form-grid textarea,
+.form-grid select {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  background: rgba(255, 255, 255, .08);
+  padding: 13px;
+}
+
+.form-grid textarea {
+  resize: vertical;
+}
+
+.switch {
+  display: flex !important;
+  align-items: center;
+  grid-template-columns: auto 1fr !important;
+}
+
+.switch input {
+  width: auto;
+}
+
+.admin-list {
+  display: grid;
+  gap: 12px;
+}
+
+.list-item {
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+}
+
+.list-item span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.list-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.list-actions button {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 11px;
+  color: var(--text);
+  background: var(--panel);
+  cursor: pointer;
+}
+
+.form-note {
+  color: var(--pink-2);
+  font-size: 13px;
+}
+
+code {
+  color: var(--pink-2);
+}
+
+@media (max-width: 1080px) {
+  .course-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stat-item {
+    border-bottom: 1px solid rgba(221, 127, 158, .18);
+  }
+
+  .about-grid,
+  .footer-grid,
+  .resource-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .feature-list {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 860px) {
+  .nav-shell {
+    min-height: 82px;
+  }
+
+  .brand-mark {
+    font-size: 42px;
+  }
+
+  .brand-sub {
+    margin-left: 36px;
+    font-size: 10px;
+    letter-spacing: 6px;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 82px;
+    right: -100%;
+    width: min(330px, 86vw);
+    height: calc(100vh - 82px);
+    padding: 28px;
+    align-items: flex-start;
+    flex-direction: column;
+    background: var(--bg-2);
+    border-left: 1px solid var(--border);
+    transition: right .25s ease;
+  }
+
+  .nav-links.open {
+    right: 0;
+  }
+
+  .menu-btn {
+    display: block;
+  }
+
+  .hero {
+    min-height: auto;
+    padding-top: 130px;
+  }
+
+  .hero-content {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-anatomy {
+    display: none;
+  }
+
+  .admin-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-sidebar {
+    position: static;
+    height: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    width: min(100% - 28px, 1160px);
+  }
+
+  .nav-actions .btn-small {
+    display: none;
+  }
+
+  .hero-copy h1 {
+    font-size: 45px;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+  }
+
+  .section-title {
+    gap: 14px;
+  }
+
+  .course-grid,
+  .about-grid,
+  .feature-list,
+  .resource-grid,
+  .footer-grid,
+  .stats,
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-list {
+    border: 0;
+  }
+
+  .feature {
+    border-right: 0;
+    border-bottom: 1px solid rgba(221, 127, 158, .18);
+    padding-inline: 0;
+  }
+
+  .stat-item {
+    border-right: 0;
+  }
+
+  .footer-bottom,
+  .admin-topbar,
+  .panel-head,
+  .list-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .form-grid label:has(textarea),
+  .form-grid .switch {
+    grid-column: span 1;
+  }
+}
+
+  </style>
 </head>
 <body class="admin-body">
   <main class="admin-layout">
@@ -138,8 +1124,357 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="assets/js/config.js"></script>
-  <script src="assets/js/data.js"></script>
-  <script src="assets/js/admin.js"></script>
+  <script>
+window.NURSCAPE_CONFIG = {
+  supabaseUrl: "https://gznoezldchbcfvmevviv.supabase.co",
+  supabaseAnonKey: "sb_publishable_P8TmuqERKLLSu43GWCDEpQ_HfbPwULe"
+};
+
+  </script>
+  <script>
+const FALLBACK_DATA = {
+  homepage: {
+    hero_title: "Votre <span>réussite</span>, notre mission.",
+    hero_subtitle: "Des cours complets, des vidéos pédagogiques, des infographies claires et des ressources fiables créées par Chaima El Hoummadi, infirmière polyvalente.",
+    primary_label: "Découvrir les cours",
+    primary_href: "#cours",
+    secondary_label: "Explorer les ressources",
+    secondary_href: "#ressources",
+    hero_image_url: "https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?auto=format&fit=crop&w=1800&q=80",
+    about_title: "À propos de Nurscape Academy",
+    about_text: "Nurscape Academy est une plateforme créée par Chaima El Hoummadi, infirmière polyvalente, pour accompagner les étudiants infirmiers avec des ressources claires, fiables et proches de la réalité du terrain.",
+    about_image_url: "https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=1000&q=80",
+    social_links: [
+      { label: "Instagram", icon: "fa-brands fa-instagram", url: "#" },
+      { label: "YouTube", icon: "fa-brands fa-youtube", url: "#" },
+      { label: "Telegram", icon: "fa-brands fa-telegram", url: "#" },
+      { label: "Facebook", icon: "fa-brands fa-facebook-f", url: "#" }
+    ],
+    features: [
+      { title: "Contenu de qualité", icon: "fa-solid fa-graduation-cap", text: "Des cours structurés par Chaima El Hoummadi, infirmière polyvalente, avec une approche claire et pratique." },
+      { title: "Apprentissage efficace", icon: "fa-solid fa-bullseye", text: "Ressources visuelles, fiches de révision et quiz pour mieux comprendre." },
+      { title: "Communauté solidaire", icon: "fa-regular fa-heart", text: "Rejoignez une communauté motivée et partagez vos expériences." }
+    ],
+    stats: [
+      { label: "Cours disponibles", value: "+150", icon: "fa-regular fa-book-open" },
+      { label: "Vidéos pédagogiques", value: "+300", icon: "fa-regular fa-circle-play" },
+      { label: "Infographies", value: "+200", icon: "fa-regular fa-image" },
+      { label: "PDF téléchargeables", value: "+500", icon: "fa-regular fa-file-lines" },
+      { label: "Étudiants accompagnés", value: "+1000", icon: "fa-solid fa-users" }
+    ]
+  },
+  courses: [
+    { title: "Anatomie & Physiologie", category: "clinique", icon: "fa-brain", description: "Comprendre le corps humain", sort_order: 1, is_published: true },
+    { title: "Sémiologie", category: "clinique", icon: "fa-stethoscope", description: "Les signes cliniques essentiels", sort_order: 2, is_published: true },
+    { title: "Stérilisation", category: "soins", icon: "fa-shield-heart", description: "Hygiène et prévention des infections", sort_order: 3, is_published: true },
+    { title: "Pathologie Médicale", category: "clinique", icon: "fa-lungs", description: "Maladies médicales courantes", sort_order: 4, is_published: true },
+    { title: "Pathologie Chirurgicale", category: "clinique", icon: "fa-scalpel-line-dashed", description: "Affections chirurgicales principales", sort_order: 5, is_published: true },
+    { title: "Pathologie Pédiatrique", category: "clinique", icon: "fa-baby", description: "Soins adaptés à l'enfant", sort_order: 6, is_published: true },
+    { title: "Urgentologie", category: "clinique", icon: "fa-truck-medical", description: "Urgences et soins immédiats", sort_order: 7, is_published: true },
+    { title: "Pharmacologie", category: "clinique", icon: "fa-capsules", description: "Médicaments et thérapeutiques", sort_order: 8, is_published: true },
+    { title: "Soins Infirmiers en Médecine", category: "soins", icon: "fa-bed-pulse", description: "Prise en charge médicale", sort_order: 9, is_published: true },
+    { title: "Soins Infirmiers en Chirurgie", category: "soins", icon: "fa-scissors", description: "Soins pré-opératoires et post-opératoires", sort_order: 10, is_published: true },
+    { title: "Système National de Santé", category: "sante", icon: "fa-hospital", description: "Organisation et politiques de santé", sort_order: 11, is_published: true },
+    { title: "Épidémiologie", category: "sante", icon: "fa-chart-line", description: "Santé publique et études épidémiologiques", sort_order: 12, is_published: true },
+    { title: "Soins Infirmiers de Base", category: "soins", icon: "fa-hand-holding-heart", description: "Les fondamentaux des soins", sort_order: 13, is_published: true }
+  ],
+  resources: [
+    { title: "Introduction à l'anatomie", type: "video", subject: "Anatomie", description: "Vidéo de démonstration à remplacer depuis l'espace admin.", url: "#", sort_order: 1, is_published: true },
+    { title: "Résumé soins de base", type: "infographic", subject: "Soins", description: "Infographie de démonstration pour organiser les révisions.", url: "#", sort_order: 2, is_published: true },
+    { title: "Cours de pharmacologie", type: "pdf", subject: "Pharmacologie", description: "PDF exemple à remplacer par un fichier Supabase Storage.", url: "#", sort_order: 3, is_published: true },
+    { title: "Mini quiz épidémiologie", type: "quiz", subject: "Épidémiologie", description: "Questionnaire dynamique publié depuis l'administration.", url: "#", sort_order: 4, is_published: true }
+  ],
+  quizzes: [
+    { question: "La prévalence mesure quoi ?", answers: ["Le nombre de nouveaux cas seulement", "Le nombre total de cas à un moment donné ou sur une période", "Le risque relatif uniquement"], correct_answer: "Le nombre total de cas à un moment donné ou sur une période", explanation: "La prévalence correspond au nombre total de cas.", sort_order: 1, is_published: true }
+  ]
+};
+
+const config = window.NURSCAPE_CONFIG || {};
+const supabaseEnabled = Boolean(config.supabaseUrl && config.supabaseAnonKey && window.supabase);
+const supabaseClient = supabaseEnabled ? window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey) : null;
+
+async function loadPublishedContent() {
+  if (!supabaseClient) return { ...FALLBACK_DATA, connected: false };
+
+  try {
+    const [homeRes, coursesRes, resourcesRes, quizzesRes] = await Promise.all([
+      supabaseClient.from("homepage").select("*").eq("id", 1).maybeSingle(),
+      supabaseClient.from("courses").select("*").eq("is_published", true).order("sort_order"),
+      supabaseClient.from("resources").select("*").eq("is_published", true).order("sort_order"),
+      supabaseClient.from("quizzes").select("*").eq("is_published", true).order("sort_order")
+    ]);
+
+    for (const res of [homeRes, coursesRes, resourcesRes, quizzesRes]) {
+      if (res.error) throw res.error;
+    }
+
+    return {
+      homepage: homeRes.data || FALLBACK_DATA.homepage,
+      courses: coursesRes.data?.length ? coursesRes.data : FALLBACK_DATA.courses,
+      resources: resourcesRes.data?.length ? resourcesRes.data : FALLBACK_DATA.resources,
+      quizzes: quizzesRes.data?.length ? quizzesRes.data : FALLBACK_DATA.quizzes,
+      connected: true
+    };
+  } catch (error) {
+    console.warn("Supabase indisponible, contenu de démonstration chargé.", error);
+    return { ...FALLBACK_DATA, connected: false };
+  }
+}
+
+async function loadAdminContent() {
+  if (!supabaseClient) return { ...FALLBACK_DATA, connected: false };
+
+  const [homeRes, coursesRes, resourcesRes, quizzesRes] = await Promise.all([
+    supabaseClient.from("homepage").select("*").eq("id", 1).maybeSingle(),
+    supabaseClient.from("courses").select("*").order("sort_order"),
+    supabaseClient.from("resources").select("*").order("sort_order"),
+    supabaseClient.from("quizzes").select("*").order("sort_order")
+  ]);
+
+  for (const res of [homeRes, coursesRes, resourcesRes, quizzesRes]) {
+    if (res.error) throw res.error;
+  }
+
+  return {
+    homepage: homeRes.data || FALLBACK_DATA.homepage,
+    courses: coursesRes.data || [],
+    resources: resourcesRes.data || [],
+    quizzes: quizzesRes.data || [],
+    connected: true
+  };
+}
+
+  </script>
+  <script>
+const adminState = {
+  content: null,
+  session: null
+};
+
+const $ = (selector) => document.querySelector(selector);
+const $ = (selector) => [...document.querySelectorAll(selector)];
+
+function setStatus(text, connected) {
+  const pill = $("#connectionStatus");
+  pill.textContent = text;
+  pill.classList.toggle("online", connected);
+}
+
+function valueFromForm(form) {
+  const entries = [...new FormData(form).entries()].filter(([, value]) => !(value instanceof File));
+  return Object.fromEntries(entries);
+}
+
+function fillForm(form, data) {
+  Object.entries(data || {}).forEach(([key, value]) => {
+    const field = form.elements[key];
+    if (!field) return;
+    if (field.type === "checkbox") field.checked = Boolean(value);
+    else if (Array.isArray(value) || typeof value === "object") field.value = JSON.stringify(value, null, 2);
+    else field.value = value ?? "";
+  });
+}
+
+function resetForm(form) {
+  form.reset();
+  const idField = form.elements.id;
+  if (idField) idField.value = "";
+}
+
+function listItem(item, type) {
+  const published = item.is_published ? "Publié" : "Masqué";
+  return `
+    <article class="list-item">
+      <div>
+        <strong>${item.title || item.question}</strong>
+        <span>${item.category || item.type || ""} · ${published}</span>
+      </div>
+      <div class="list-actions">
+        <button type="button" data-edit="${type}" data-id="${item.id || item.title || item.question}">Modifier</button>
+        ${item.id ? `<button type="button" data-delete="${type}" data-id="${item.id}">Supprimer</button>` : ""}
+      </div>
+    </article>
+  `;
+}
+
+function renderLists() {
+  $("#courseList").innerHTML = adminState.content.courses.map((item) => listItem(item, "course")).join("");
+  $("#resourceList").innerHTML = adminState.content.resources.map((item) => listItem(item, "resource")).join("");
+  $("#quizList").innerHTML = adminState.content.quizzes.map((item) => listItem(item, "quiz")).join("");
+}
+
+async function requireAdmin() {
+  if (!supabaseClient) {
+    setStatus("Mode aperçu", false);
+    $("#loginCard").hidden = false;
+    return false;
+  }
+
+  const { data } = await supabaseClient.auth.getSession();
+  adminState.session = data.session;
+  const isLoggedIn = Boolean(adminState.session);
+  $("#loginCard").hidden = isLoggedIn;
+  $("#logoutBtn").hidden = !isLoggedIn;
+  setStatus(isLoggedIn ? "Connecté à Supabase" : "Connexion requise", isLoggedIn);
+  return isLoggedIn;
+}
+
+async function refreshAdmin() {
+  try {
+    adminState.content = await loadAdminContent();
+  } catch (error) {
+    adminState.content = { ...FALLBACK_DATA, connected: false };
+    console.warn(error);
+  }
+  fillForm($("#homeForm"), adminState.content.homepage);
+  renderLists();
+}
+
+async function saveHomepage(event) {
+  event.preventDefault();
+  const payload = { id: 1, ...valueFromForm(event.currentTarget) };
+  if (!supabaseClient || !adminState.session) {
+    alert("Connectez Supabase et votre compte admin avant d'enregistrer.");
+    return;
+  }
+
+  const heroFile = event.currentTarget.elements.hero_image_file.files[0];
+  const aboutFile = event.currentTarget.elements.about_image_file.files[0];
+  if (heroFile) payload.hero_image_url = await uploadFile("site-images", heroFile, "homepage");
+  if (aboutFile) payload.about_image_url = await uploadFile("site-images", aboutFile, "homepage");
+
+  const { error } = await supabaseClient.from("homepage").upsert(payload);
+  if (error) throw error;
+  await refreshAdmin();
+}
+
+function safeFileName(fileName) {
+  return fileName
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9.]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+async function uploadFile(bucket, file, folder = "uploads") {
+  const path = `${folder}/${Date.now()}-${safeFileName(file.name)}`;
+  const { error } = await supabaseClient.storage.from(bucket).upload(path, file, { upsert: false });
+  if (error) throw error;
+  const { data } = supabaseClient.storage.from(bucket).getPublicUrl(path);
+  return data.publicUrl;
+}
+
+async function upsertTable(table, form, transform = (payload) => payload) {
+  if (!supabaseClient || !adminState.session) {
+    alert("Connectez Supabase et votre compte admin avant d'enregistrer.");
+    return;
+  }
+  const raw = valueFromForm(form);
+  const payload = transform({
+    ...raw,
+    sort_order: Number(raw.sort_order || 1),
+    is_published: form.elements.is_published.checked
+  });
+
+  const upload = form.elements.upload_file?.files?.[0];
+  if (upload) {
+    const bucket = payload.type === "infographic" ? "site-images" : "course-files";
+    payload.url = await uploadFile(bucket, upload, payload.type || table);
+  }
+
+  if (!payload.id) delete payload.id;
+  const { error } = await supabaseClient.from(table).upsert(payload);
+  if (error) throw error;
+  resetForm(form);
+  await refreshAdmin();
+}
+
+async function deleteRow(table, id) {
+  if (!confirm("Supprimer cet élément ?")) return;
+  const { error } = await supabaseClient.from(table).delete().eq("id", id);
+  if (error) throw error;
+  await refreshAdmin();
+}
+
+function bindAdmin() {
+  $(".admin-tab").forEach((tab) => {
+    tab.addEventListener("click", () => {
+      $(".admin-tab").forEach((item) => item.classList.remove("active"));
+      $(".admin-panel").forEach((panel) => panel.classList.remove("active"));
+      tab.classList.add("active");
+      $(`#${tab.dataset.panel}`).classList.add("active");
+    });
+  });
+
+  $("#loginForm").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!supabaseClient) {
+      $("#loginNote").textContent = "Ajoutez vos clés Supabase dans assets/js/config.js.";
+      return;
+    }
+    const { email, password } = valueFromForm(event.currentTarget);
+    const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    $("#loginNote").textContent = error ? error.message : "";
+    await requireAdmin();
+    await refreshAdmin();
+  });
+
+  $("#logoutBtn").addEventListener("click", async () => {
+    await supabaseClient.auth.signOut();
+    await requireAdmin();
+  });
+
+  $("#homeForm").addEventListener("submit", saveHomepage);
+  $("#courseForm").addEventListener("submit", (event) => {
+    event.preventDefault();
+    upsertTable("courses", event.currentTarget);
+  });
+  $("#resourceForm").addEventListener("submit", (event) => {
+    event.preventDefault();
+    upsertTable("resources", event.currentTarget);
+  });
+  $("#quizForm").addEventListener("submit", (event) => {
+    event.preventDefault();
+    upsertTable("quizzes", event.currentTarget, (payload) => ({
+      ...payload,
+      answers: payload.answers.split("\n").map((answer) => answer.trim()).filter(Boolean)
+    }));
+  });
+
+  document.addEventListener("click", (event) => {
+    const editButton = event.target.closest("[data-edit]");
+    const deleteButton = event.target.closest("[data-delete]");
+
+    if (editButton) {
+      const map = {
+        course: ["courses", "courseForm"],
+        resource: ["resources", "resourceForm"],
+        quiz: ["quizzes", "quizForm"]
+      };
+      const [collection, formId] = map[editButton.dataset.edit];
+      const item = adminState.content[collection].find((entry) => String(entry.id || entry.title || entry.question) === editButton.dataset.id);
+      fillForm($(`#${formId}`), item);
+      if (editButton.dataset.edit === "quiz" && Array.isArray(item.answers)) {
+        $(`#${formId}`).elements.answers.value = item.answers.join("\n");
+      }
+    }
+
+    if (deleteButton) {
+      const table = { course: "courses", resource: "resources", quiz: "quizzes" }[deleteButton.dataset.delete];
+      deleteRow(table, deleteButton.dataset.id);
+    }
+  });
+}
+
+async function initAdmin() {
+  bindAdmin();
+  await requireAdmin();
+  await refreshAdmin();
+}
+
+initAdmin();
+
+  </script>
 </body>
 </html>
