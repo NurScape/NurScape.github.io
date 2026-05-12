@@ -1049,7 +1049,7 @@ code {
         <h2>Connexion administrateur</h2>
         <p>Connectez Supabase dans <code>assets/js/config.js</code>, puis utilisez votre compte admin.</p>
         <form id="loginForm" class="form-grid">
-          <label>Email <input name="email" type="email" required></label>
+          <label>Email <input name="email" type="email" value="chaimaelhoummadi@gmail.com" required></label>
           <label>Mot de passe <input name="password" type="password" required></label>
           <button class="btn btn-primary" type="submit">Se connecter</button>
           <span class="form-note" id="loginNote"></span>
@@ -1155,6 +1155,11 @@ code {
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    if (!window.supabase) {
+      document.write('<script src="https://unpkg.com/@supabase/supabase-js@2"><\\/script>');
+    }
+  </script>
   <script>
 window.NURSCAPE_CONFIG = {
   supabaseUrl: "https://gznoezldchbcfvmevviv.supabase.co",
@@ -1338,6 +1343,7 @@ async function requireAdmin() {
   if (!supabaseClient) {
     setStatus("Mode aperçu", false);
     $("#loginCard").hidden = false;
+    $("#loginNote").textContent = "Supabase n'est pas chargé. Vérifiez la connexion internet et rechargez la page.";
     return false;
   }
 
@@ -1348,6 +1354,26 @@ async function requireAdmin() {
   $("#logoutBtn").hidden = !isLoggedIn;
   setStatus(isLoggedIn ? "Connecté à Supabase" : "Connexion requise", isLoggedIn);
   return isLoggedIn;
+}
+
+async function verifyAdminProfile() {
+  if (!supabaseClient) return false;
+  const { data: userData } = await supabaseClient.auth.getUser();
+  if (!userData?.user) return false;
+  const { data, error } = await supabaseClient
+    .from("admin_profiles")
+    .select("user_id")
+    .eq("user_id", userData.user.id)
+    .maybeSingle();
+  if (error) {
+    $("#loginNote").textContent = `Connecté, mais vérification admin impossible: ${error.message}`;
+    return false;
+  }
+  if (!data) {
+    $("#loginNote").textContent = "Connecté, mais ce compte n'est pas encore dans admin_profiles.";
+    return false;
+  }
+  return true;
 }
 
 async function refreshAdmin() {
@@ -1442,14 +1468,24 @@ function bindAdmin() {
   $("#loginForm").addEventListener("submit", async (event) => {
     event.preventDefault();
     if (!supabaseClient) {
-      $("#loginNote").textContent = "Ajoutez vos clés Supabase dans assets/js/config.js.";
+      $("#loginNote").textContent = "Supabase n'est pas chargé. Vérifiez internet, puis rechargez avec Ctrl + F5.";
       return;
     }
     const { email, password } = valueFromForm(event.currentTarget);
-    const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
-    $("#loginNote").textContent = error ? error.message : "";
-    await requireAdmin();
-    await refreshAdmin();
+    $("#loginNote").textContent = "Connexion en cours...";
+    try {
+      const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      if (error) {
+        $("#loginNote").textContent = `Erreur de connexion: ${error.message}`;
+        return;
+      }
+      const isAdmin = await verifyAdminProfile();
+      $("#loginNote").textContent = isAdmin ? "Connexion réussie. Vous pouvez gérer le contenu." : $("#loginNote").textContent;
+      await requireAdmin();
+      await refreshAdmin();
+    } catch (error) {
+      $("#loginNote").textContent = `Erreur: ${error.message}`;
+    }
   });
 
   $("#logoutBtn").addEventListener("click", async () => {
@@ -1500,9 +1536,15 @@ function bindAdmin() {
 }
 
 async function initAdmin() {
-  bindAdmin();
-  await requireAdmin();
-  await refreshAdmin();
+  try {
+    bindAdmin();
+    await requireAdmin();
+    await refreshAdmin();
+  } catch (error) {
+    setStatus("Erreur", false);
+    $("#loginCard").hidden = false;
+    $("#loginNote").textContent = `Erreur de chargement admin: ${error.message}`;
+  }
 }
 
 initAdmin();
