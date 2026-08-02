@@ -10,10 +10,12 @@ Open `index.html` directly in your browser. The site shows built-in sample conte
 
 1. Create a Supabase project.
 2. Open the Supabase SQL editor and run `supabase/schema.sql`.
-3. Create an admin user in Supabase Auth.
-4. Add that user's id to `admin_profiles` using the final SQL comment in `supabase/schema.sql`.
+3. Create an admin user in Supabase Authentication → Users.
+4. Copy that user's UUID, open `supabase/split/05_add_admin_template.sql`, replace both placeholders, and run it once in the SQL editor.
 5. Copy your project URL and anon key into `assets/js/config.js`.
 6. Open `admin.html` and sign in.
+
+If the page says **Compte non autorisé**, authentication works but step 4 is missing or contains the wrong UUID. Files are stored in the public `site-images` and `course-files` buckets; uploads are limited to 25 MB by the admin interface.
 
 ## Content model
 
